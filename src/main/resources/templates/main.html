@@ -6,9 +6,8 @@
 </head>
 <body>
 <div class="container">
-  <div th:each="item : ${items}">
-    <h2 class="title" th:text="${item.title}"></h2>
-    <a th:href="${item.reference}" class="button">Go to page</a>
+  <div th:each="group : ${groups}">
+    <a th:href="${group.groupHref}" class="button" th:text="${group.groupName}">Go to page</a>
   </div>
 </div>
 </body>

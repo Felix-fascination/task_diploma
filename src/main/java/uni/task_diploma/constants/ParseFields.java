@@ -9,7 +9,7 @@ public class ParseFields {
 
     public static final String FACULTY_CONTAINERS = "div.mb-4";
 
-    public static final String otherCourses = "div.tab-pane#course";
+    public static final String otherCourses = "div.tab-pane#course_";
 
     public static final String ButtonClass = "a.btn.btn-sm.btn-secondary.btn-pill.mr-1.mb-2";
 

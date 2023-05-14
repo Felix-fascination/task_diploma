@@ -28,15 +28,15 @@ public class GroupElement implements Comparable{
     @Override
     public int compareTo(Object o) {
         GroupElement groupElement = (GroupElement) o;
-        int facultyDiff = groupElement.getFacultyName().compareTo(this.facultyName)*1000;
-        int courseDiff = groupElement.getCourse().compareTo(this.course) * 10000;
+        int facultyDiff = this.facultyName.compareTo(groupElement.getFacultyName())*1000;
+        int courseDiff = this.course.compareTo(groupElement.getCourse()) * 100000;
         // Some collisions are possible
         String groupNumber1 = groupElement.getGroupName().split("-")[1];
         String groupNumber2 = this.groupName.split("-")[1];
 
 
-        return courseDiff + facultyDiff + groupNumber1.compareTo(groupNumber2) * 10 +
-                + groupElement.getGroupHref().compareTo(this.groupHref);
+        return courseDiff + facultyDiff + groupNumber2.compareTo(groupNumber1) * 10 +
+                + this.groupHref.compareTo(groupElement.getGroupHref());
 
     }
 }
