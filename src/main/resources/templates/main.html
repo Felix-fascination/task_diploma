@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Beautiful Page</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="container">
+  <div th:each="item : ${items}">
+    <h2 class="title" th:text="${item.title}"></h2>
+    <a th:href="${item.reference}" class="button">Go to page</a>
+  </div>
+</div>
+</body>
+</html>
