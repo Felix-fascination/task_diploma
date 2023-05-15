@@ -6,19 +6,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import uni.task_diploma.constants.ParseFields;
+import uni.task_diploma.constants.ParseFieldsMain;
 import uni.task_diploma.constants.UrlParsingConstants;
 import uni.task_diploma.module.GroupElement;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.*;
 
 @Service
 public class MainService {
 
-    public String makeMainPageModel(Model model){
-        TreeSet<GroupElement> groupElements;
+    public void makeMainPageModel(Model model){
+        // First key is course
+        // Second key is faculty name
+        TreeMap<String, Map<String, List<GroupElement>>> groupElements;
         try{
             // Connect to the website
             Document document = Jsoup
@@ -26,47 +27,40 @@ public class MainService {
                     .get();
 
             // Extract data from specific elements
-            groupElements = new TreeSet<>();
-            getGroupElements(document, groupElements, ParseFields.FirstCourse, 1);
+            groupElements = new TreeMap<>();
+            getGroupElements(document, groupElements, ParseFieldsMain.FirstCourse, 1);
             getGroupElementsFromOtherCourses(document, groupElements);
 
-            Iterator<GroupElement> iterator = groupElements.descendingIterator();
-            model.addAttribute("groups", groupElements);
-            /*model.addAttribute("")
-            while(iterator.hasNext()){
-                System.out.println(iterator.next());
-            }*/
+            model.addAttribute("groupMap", groupElements);
+
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 
-    public void getGroupElementsFromOtherCourses(Document document, TreeSet<GroupElement> groupElements){
+    public void getGroupElementsFromOtherCourses(Document document, Map<String, Map<String, List<GroupElement>>> groupElements){
         for(int courseNumber = 2; courseNumber <  6; courseNumber++){
-            getGroupElements(document, groupElements, ParseFields.otherCourses + courseNumber, courseNumber);
+            getGroupElements(document, groupElements, ParseFieldsMain.otherCourses + courseNumber, courseNumber);
         }
     }
 
-    public void getGroupElements(Document document, TreeSet<GroupElement> groupElements, String courseField, int courseNumber){
+    public void getGroupElements(Document document, Map<String, Map<String, List<GroupElement>>> groupElements, String courseField, int courseNumber){
         Element container = document.selectFirst(courseField);
-        Elements facultyContainers = container.select(ParseFields.FACULTY_CONTAINERS);
+        Elements facultyContainers = container.select(ParseFieldsMain.FACULTY_CONTAINERS);
 
         for(Element facultyContainer : facultyContainers){
-            Elements buttons = facultyContainer.select(ParseFields.ButtonClass);
-            Element facultyName = facultyContainer.selectFirst(ParseFields.FACULTY_NAME);
+            Elements buttons = facultyContainer.select(ParseFieldsMain.ButtonClass);
+            Element facultyName = facultyContainer.selectFirst(ParseFieldsMain.FACULTY_NAME);
             for (Element button : buttons){
                 // Extract href value and button name
-                groupElements.add(
-                        GroupElement.builder()
+                groupElements.computeIfAbsent(courseNumber + " курс", k -> new HashMap<>())
+                        .computeIfAbsent(facultyName.text(), k -> new ArrayList<>())
+                        .add(GroupElement.builder()
                                 .groupName(button.text())
                                 .groupHref(button.attr("href"))
-                                .facultyName(facultyName.text())
-                                .course( courseNumber + " курс")
                                 .build()
-                );
+                        );
             }
         }
     }

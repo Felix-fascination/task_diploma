@@ -3,7 +3,7 @@ package uni.task_diploma.constants;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class ParseFields {
+public class ParseFieldsMain {
 
     public static final String FirstCourse = "div.tab-pane.active";
 

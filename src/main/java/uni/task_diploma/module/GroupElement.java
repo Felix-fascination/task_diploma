@@ -9,23 +9,23 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class GroupElement implements Comparable{
+public class GroupElement{
 
     private final String groupName;
 
     private final String groupHref;
 
-    private final String facultyName;
+    /*private final String facultyName;
 
-    private final String course;
+    private final String course;*/
 
-    @Override
+    /*@Override
     public String toString() {
         return "course: " + course + "\nFaculty: " + facultyName + " \n group name:" + groupName + "\n href: " + groupHref;
-    }
+    }*/
 
 
-    @Override
+    /*@Override
     public int compareTo(Object o) {
         GroupElement groupElement = (GroupElement) o;
         int facultyDiff = this.facultyName.compareTo(groupElement.getFacultyName())*1000;
@@ -38,5 +38,5 @@ public class GroupElement implements Comparable{
         return courseDiff + facultyDiff + groupNumber2.compareTo(groupNumber1) * 10 +
                 + this.groupHref.compareTo(groupElement.getGroupHref());
 
-    }
+    }*/
 }
