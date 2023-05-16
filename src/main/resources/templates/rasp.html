@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
  <title>My Schedule</title>
- <link rel="stylesheet" href="/rasp.css">
+ <link rel="stylesheet"  href="/rasp.css" />
 </head>
 <body>
 <h1>My Schedule</h1>
@@ -24,6 +25,14 @@
     <ul>
      <li th:each="lecturer : ${classEntry.value.lector}" th:text="${lecturer}"></li>
     </ul>
+    <p th:if="${classEntry.value.comment != null}" th:text="${classEntry.value.comment}"></p>
+    <p th:if="${classEntry.value.commentator != null}" th:text="'Comment by: ' + ${classEntry.value.commentator}"></p>
+    <form th:action="@{/addComment}" method="post">
+     <input type="hidden" name="day" th:value="${day}" />
+     <input type="hidden" name="time" th:value="${time}" />
+     <input type="text" name="comment" placeholder="Add a comment" />
+     <input type="submit" value="Submit" />
+    </form>
    </div>
   </td>
  </tr>
