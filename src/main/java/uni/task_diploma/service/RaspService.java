@@ -3,6 +3,7 @@ package uni.task_diploma.service;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import uni.task_diploma.module.RaspTables;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,35 +51,40 @@ public class RaspService {
             // Описания в течение дня
             Elements classDescriptions = raspDays.get(i).select(ParseFieldRasp.RASP_CLASS_DESCRIPTION);
             // Вытаскиваем отсюда название предметра, его тип и имена преподавателей
-            Elements classNames = classDescriptions.select(ParseFieldRasp.CLASS_NAME);
-            Elements classTypes = classDescriptions.select(ParseFieldRasp.CLASS_TYPE);
-            Elements classLectors = classDescriptions.select(ParseFieldRasp.CLASS_LECTORS);
+
             // Название существующего дня
             String nameOfTheDay = dayOfWeek.get(i).text();
             int count = 0;
             for(int j = 0; j < timeElements.size(); j++) {
+                Element classNames = classDescriptions.get(j).selectFirst(ParseFieldRasp.CLASS_NAME);
+                Element classTypes = classDescriptions.get(j).selectFirst(ParseFieldRasp.CLASS_TYPE);
+                Elements classLectors = classDescriptions.get(j).select(ParseFieldRasp.CLASS_LECTORS);
+
+                List<String> lectors = new ArrayList<>();
+                for (int k = 0; k < classLectors.size(); k++) {
+                     lectors.add(classLectors.get(k).text());
+                }
+                if (lectors.isEmpty()) lectors.add("");
+
+
                 String time = timeElements.get(j).text();
-                String classType = classTypes.get(j).text();
-                String className = classNames.get(j).text();
-                String classLector;
+                String classType = classTypes.text();
+                String className = classNames.text();
                 String room;
                 if (className.contains("изическ")) {
-                    classLector = "";
+
                     room = "";
                 }
                 else {
                     try{
-                        classLector = classLectors.get(count).text();
                         room = roomElements.get(count).text();
                     }
                     catch (Exception e){
-                        classLector = "";
                         room = "";
                     }
                     count++;
                 }
 
-                String finalClassLector = classLector;
                 String finalRoom = room;
                 classes.computeIfAbsent(nameOfTheDay, k -> new HashMap<>())
                         .computeIfAbsent(time,
@@ -85,7 +92,7 @@ public class RaspService {
                                 ClassModule.builder()
                                 .className(className)
                                 .type(classType)
-                                .lector(List.of(finalClassLector))
+                                .lector(lectors)
                                 .room(finalRoom)
                                 .build()
                         );
@@ -95,8 +102,6 @@ public class RaspService {
         }
         RaspTable raspTable = new RaspTable(classes);
         createModel(model, raspTable, groupName);
-        //System.out.println(raspTable);
-
 
     }
 
