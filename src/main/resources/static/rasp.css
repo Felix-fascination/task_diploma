@@ -1,7 +1,7 @@
 /* rasp.css */
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
@@ -23,6 +23,12 @@ table.schedule td, table.schedule th {
     min-height: 100px; /* adjust as needed */
 }
 
+.schedule td div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 table.schedule th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -38,16 +44,21 @@ table.schedule td div:hover {
 form {
     margin-top: 10px;
 }
+.lector {
+    margin-bottom: 5px;
+}
 .comment {
     font-weight: bold;
-    color: red;
 }
 
 .commentator {
     font-weight: bold;
-    color: blue;
 }
-.group1, .group2 {
-    margin-bottom: 10px;
+
+.shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    height: 100%;
 }
 

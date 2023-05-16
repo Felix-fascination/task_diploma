@@ -20,7 +20,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function () {
                 // On success, reload the page
-                location.reload();
+                window.location.reload()
             },
             error: function () {
                 // Handle error case
