@@ -18,13 +18,10 @@ $(document).ready(function () {
             data: json,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function () {
-                // On success, reload the page
-                window.location.reload()
-            },
             error: function () {
-                // Handle error case
-                console.error("Error submitting form.");
+                // Reloads page
+                // Todo remake upon success
+                window.location.reload(true);
             }
         });
     });

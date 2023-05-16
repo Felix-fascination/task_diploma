@@ -29,4 +29,24 @@ public class CookieService {
         }
         throw new RuntimeException("No group name");
     }
+
+    public void setCommentatorName(HttpServletResponse response, String name) {
+        Cookie cookie = new Cookie("commentator_name", name);
+        response.addCookie(cookie);
+    }
+
+    public String getCommentatorName(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        // Loop through the cookies to find a specific one
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("commentator_name")) {
+                    String cookieValue = cookie.getValue();
+                    // Do something with the cookie value
+                    return cookieValue;
+                }
+            }
+        }
+        throw new RuntimeException("No commentator name");
+    }
 }

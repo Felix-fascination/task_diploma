@@ -33,10 +33,11 @@ public class RaspController {
     }
 
     @PostMapping("/comment/post")
-    public void postComment(@RequestBody Comment comment, HttpServletRequest request,
-                            HttpServletResponse response){
+    public void postComment(@RequestBody Comment comment, HttpServletRequest request){
         // Todo add a commentator through cookiew
         String groupName = cookieService.getGroupName(request);
+        String commentatorName = cookieService.getCommentatorName(request);
+        comment.setCommentatorName(commentatorName);
         raspTables.addComment(groupName, comment);
 
 
