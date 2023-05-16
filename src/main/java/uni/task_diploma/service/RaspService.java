@@ -1,6 +1,6 @@
 package uni.task_diploma.service;
 
-import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -8,16 +8,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import uni.task_diploma.constants.ParseFieldRasp;
 import uni.task_diploma.module.ClassModule;
+import uni.task_diploma.module.RaspTable;
+import uni.task_diploma.module.RaspTables;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class RaspService {
 
-    public void makeModel(Model model, String raspUrl) {
+    private final RaspTables raspTables;
+
+    public void makeModel(Model model, String raspUrl, String groupName) {
         Document document = getDocument(raspUrl);
         // Parse the HTML to extract the elements you want
         Elements raspDays = document.select(ParseFieldRasp.RASP_DAY);
@@ -28,7 +34,8 @@ public class RaspService {
 
 
         for(int i = 0; i < raspDays.size(); i++) {
-            Map<String, ClassModule> dayClasses = new HashMap<>();
+            
+            //Map<String, ClassModule> dayClasses = new HashMap<>();
 
 
             // Времена в течения дня
@@ -44,52 +51,54 @@ public class RaspService {
             Elements classTypes = classDescriptions.select(ParseFieldRasp.CLASS_TYPE);
             Elements classLectors = classDescriptions.select(ParseFieldRasp.CLASS_LECTORS);
             // Название существующего дня
-            String nameOfTheDay = dayOfWeek.get(0).text();
-            int lectorCount = 0;
+            String nameOfTheDay = dayOfWeek.get(i).text();
+            int count = 0;
             for(int j = 0; j < timeElements.size(); j++) {
                 String time = timeElements.get(j).text();
-                String room = roomElements.get(j).text();
                 String classType = classTypes.get(j).text();
                 String className = classNames.get(j).text();
                 String classLector;
-                if (className.contains("изическ")) classLector = "";
+                String room;
+                if (className.contains("изическ")) {
+                    classLector = "";
+                    room = "";
+                }
                 else {
-                    classLector = classLectors.get(lectorCount).text();
-                    lectorCount++;
+                    try{
+                        classLector = classLectors.get(count).text();
+                        room = roomElements.get(count).text();
+                    }
+                    catch (Exception e){
+                        classLector = "";
+                        room = "";
+                    }
+                    count++;
                 }
 
+                String finalClassLector = classLector;
+                String finalRoom = room;
                 classes.computeIfAbsent(nameOfTheDay, k -> new HashMap<>())
                         .computeIfAbsent(time,
                                 k ->
                                 ClassModule.builder()
+                                .className(className)
                                 .type(classType)
-                                .lector(List.of(classLector))
-                                .room(room)
+                                .lector(List.of(finalClassLector))
+                                .room(finalRoom)
                                 .build()
                         );
             }
 
 
-            /*Class.builder()
-                    .type(classTypes.get(j).text())
-                    .lector(List.of(classLectors.get(j).text()))
-                    .room(roomElements.get(j).text()))
-                                .build();*/
-
         }
-        System.out.println("de");
-        /*// Need to loop for everyday
-        Elements timeElements = raspDays.select(ParseFieldRasp.RASP_TIME);
-        // Нужна проверка на физру - нет кабинета
-        Elements roomElements = raspDays.select(ParseFieldRasp.RASP_ROOM);
-        //Все эти элементы идут параллельно
-        Elements classNumber = raspDays.select(ParseFieldRasp.RASP_CLASS_NUMBER);
+        RaspTable raspTable = new RaspTable(classes);
+        List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
+        List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
 
-        // Experimental need to loop
-        Elements classDescriptions = raspDays.select(ParseFieldRasp.RASP_CLASS_DESCRIPTION);
-        Elements classNames = classDescriptions.select(ParseFieldRasp.CLASS_NAME);
-        Elements classTypes = classDescriptions.select(ParseFieldRasp.CLASS_TYPE);
-        Elements classLectors = classDescriptions.select(ParseFieldRasp.CLASS_LECTORS);*/
+        model.addAttribute("classTimes", timesOfDay);
+        model.addAttribute("daysOfWeek", daysOfWeek);
+        model.addAttribute("scheduleData", raspTables.putTable(groupName, raspTable));
+        //System.out.println(raspTable);
 
 
     }

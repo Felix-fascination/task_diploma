@@ -19,7 +19,7 @@
     <div th:each="facultyEntry : ${courseEntry.value}" class="faculty-container">
       <h2 th:text="${facultyEntry.key}"></h2>
       <div th:each="group : ${facultyEntry.value}">
-        <a th:href="@{'/rasp'(raspUrl=${group.groupHref})}" class="button" th:text="${group.groupName}"></a>
+        <a th:href="@{'/rasp'(raspUrl=${group.groupHref}, groupName=${group.groupName})}" class="button" th:text="${group.groupName}"></a>
       </div>
     </div>
   </div>

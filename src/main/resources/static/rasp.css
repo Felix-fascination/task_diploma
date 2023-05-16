@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.schedule {
+    margin: auto;
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.schedule th, .schedule td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.schedule th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.schedule td {
+    vertical-align: top;
+}
+
+.schedule td div {
+    margin: 5px;
+    padding: 5px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}

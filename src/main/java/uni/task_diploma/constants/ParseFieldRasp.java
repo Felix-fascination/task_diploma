@@ -18,7 +18,7 @@ public class ParseFieldRasp {
 
     public static final String RASP_CLASS_DESCRIPTION = "td.align-middle";
 
-    public static final String CLASS_NAME = "div.mb-2";
+    public static final String CLASS_NAME = "span.mr-1";
 
     public static final String CLASS_TYPE = "span[class^=badge badge-pill badge-]";
 

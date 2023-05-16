@@ -1,19 +1,17 @@
 package uni.task_diploma.module;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 @EqualsAndHashCode
 public class GroupElement{
 
-    private final String groupName;
+    private String groupName;
 
-    private final String groupHref;
+    private String groupHref;
+
 
     /*private final String facultyName;
 
