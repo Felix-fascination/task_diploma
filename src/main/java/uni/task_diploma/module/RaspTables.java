@@ -18,4 +18,12 @@ public class RaspTables {
      public RaspTable getTable(String groupName){
          return tables.get(groupName);
      }
+
+     public void addComment(String groupName, Comment comment) {
+         tables.get(groupName).addComment(comment);
+     }
+
+     public Boolean isPresent(String groupName){
+         return tables.containsKey(groupName);
+     }
 }

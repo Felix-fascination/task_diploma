@@ -1,74 +1,53 @@
+/* rasp.css */
+
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f8f8;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    padding: 20px 0;
 }
 
-.schedule {
-    margin: 50px auto;
-    width: 90%;
+table.schedule {
+    width: 100%;
     border-collapse: collapse;
+    table-layout: fixed; /* To keep cells of equal width */
 }
 
-.schedule th, .schedule td {
+table.schedule td, table.schedule th {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
+    vertical-align: top;
+    min-height: 100px; /* adjust as needed */
 }
 
-.schedule th {
+table.schedule th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
     background-color: #4CAF50;
     color: white;
 }
 
-.schedule tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.schedule tr:hover {
-    background-color: #ddd;
-}
-
-.schedule div {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-}
-
-.schedule ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+table.schedule td div:hover {
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
 form {
     margin-top: 10px;
 }
-
-input[type="text"] {
-    width: 80%;
-    padding: 5px;
-    margin: 5px 0;
+.comment {
+    font-weight: bold;
+    color: red;
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
+.commentator {
+    font-weight: bold;
+    color: blue;
 }
+.group1, .group2 {
+    margin-bottom: 10px;
+}
+

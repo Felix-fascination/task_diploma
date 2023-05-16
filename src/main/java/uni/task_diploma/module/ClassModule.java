@@ -3,6 +3,7 @@ package uni.task_diploma.module;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
+@Setter
 public class ClassModule {
     // Possibly need to change these two to outer and inner keys for Maps
     /*private final String dayOfWeek;

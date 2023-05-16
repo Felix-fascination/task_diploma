@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
- <title>My Schedule</title>
+ <title>Расписание</title>
  <link rel="stylesheet"  href="/rasp.css" />
 </head>
 <body>
-<h1>My Schedule</h1>
+<h1>Расписание</h1>
 <table class="schedule">
  <thead>
  <tr>
@@ -19,24 +18,29 @@
   <td th:text="${time}"></td>
   <td th:each="day : ${daysOfWeek}">
    <div th:each="classEntry : ${scheduleData.getDaySchedule(day).entrySet()}" th:if="${classEntry.key == time}">
-    <p th:text="${classEntry.value.className}"></p>
-    <p th:text="${classEntry.value.type}"></p>
-    <p th:text="${classEntry.value.room}"></p>
-    <ul>
-     <li th:each="lecturer : ${classEntry.value.lector}" th:text="${lecturer}"></li>
-    </ul>
-    <p th:if="${classEntry.value.comment != null}" th:text="${classEntry.value.comment}"></p>
-    <p th:if="${classEntry.value.commentator != null}" th:text="'Comment by: ' + ${classEntry.value.commentator}"></p>
-    <form th:action="@{/addComment}" method="post">
-     <input type="hidden" name="day" th:value="${day}" />
-     <input type="hidden" name="time" th:value="${time}" />
-     <input type="text" name="comment" placeholder="Add a comment" />
-     <input type="submit" value="Submit" />
-    </form>
+    <div class="group1">
+     <p th:text="${classEntry.value.className}"></p>
+     <p th:text="${classEntry.value.type}"></p>
+     <p th:text="${classEntry.value.room}"></p>
+     <ul>
+      <li th:each="lecturer : ${classEntry.value.lector}" th:text="${lecturer}"></li>
+     </ul>
+    </div>
+    <div class="group2">
+     <p class="comment" th:if="${classEntry.value.comment != null}" th:text="${classEntry.value.comment}"></p>
+     <p class="commentator" th:if="${classEntry.value.commentator != null}" th:text="'Comment by: ' + ${classEntry.value.commentator}"></p>
+     <form th:if="${!classEntry.value.className.isEmpty()}" th:action="@{/rasp/comment/post}" method="post">
+      <input type="hidden" name="day" th:value="${day}" />
+      <input type="hidden" name="time" th:value="${time}" />
+      <textarea name="comment" placeholder="Оставить комментарий"></textarea>
+      <input type="submit" value="Отправить" />
+     </form>
+    </div>
    </div>
   </td>
  </tr>
  </tbody>
 </table>
+<script src="/rasp.js"></script>
 </body>
 </html>

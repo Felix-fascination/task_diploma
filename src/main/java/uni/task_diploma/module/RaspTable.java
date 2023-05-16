@@ -27,6 +27,10 @@ public class RaspTable {
         }
     }
 
+    public void addComment (Comment comment) {
+        raspTable.get(comment.getDay()).get(comment.getTime()).setComment(comment.getComment());
+    }
+
     public Set<Map.Entry<String, Map<String, ClassModule>>> entrySet(){
         return raspTable.entrySet();
     }

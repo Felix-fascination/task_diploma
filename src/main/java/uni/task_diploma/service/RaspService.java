@@ -11,8 +11,8 @@ import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.RaspTable;
 import uni.task_diploma.module.RaspTables;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,10 @@ public class RaspService {
     private final RaspTables raspTables;
 
     public void makeModel(Model model, String raspUrl, String groupName) {
+        if (raspTables.isPresent(groupName)){
+            getModel(model, groupName);
+            return;
+        }
         Document document = getDocument(raspUrl);
         // Parse the HTML to extract the elements you want
         Elements raspDays = document.select(ParseFieldRasp.RASP_DAY);
@@ -36,8 +40,6 @@ public class RaspService {
         for(int i = 0; i < raspDays.size(); i++) {
             
             //Map<String, ClassModule> dayClasses = new HashMap<>();
-
-
             // Времена в течения дня
             Elements timeElements = raspDays.get(i).select(ParseFieldRasp.RASP_TIME);
             //Кабинеты в течение дня - добавить проверку на физру
@@ -92,15 +94,28 @@ public class RaspService {
 
         }
         RaspTable raspTable = new RaspTable(classes);
+        createModel(model, raspTable, groupName);
+        //System.out.println(raspTable);
+
+
+    }
+
+    public void createModel(Model model, RaspTable raspTable, String groupName ){
         List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
         List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
 
         model.addAttribute("classTimes", timesOfDay);
         model.addAttribute("daysOfWeek", daysOfWeek);
         model.addAttribute("scheduleData", raspTables.putTable(groupName, raspTable));
-        //System.out.println(raspTable);
+    }
 
+    private void getModel(Model model, String groupName){
+        List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
+        List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
 
+        model.addAttribute("classTimes", timesOfDay);
+        model.addAttribute("daysOfWeek", daysOfWeek);
+        model.addAttribute("scheduleData", raspTables.getTable(groupName));
     }
 
     private Document getDocument(String raspUrl) {
