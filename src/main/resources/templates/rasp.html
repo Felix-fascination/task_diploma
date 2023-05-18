@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Расписание</title>
-    <link rel="stylesheet"  href="/rasp.css" />
+    <link rel="stylesheet"  href="/css/rasp.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -21,9 +21,12 @@
         <td th:each="day : ${daysOfWeek}">
             <div th:each="classEntry : ${scheduleData.getDaySchedule(day).entrySet()}" th:if="${classEntry.key == time}">
                 <div class="shadow">
-                    <p th:text="${classEntry.value.className}"></p>
-                    <p th:text="${classEntry.value.type}"></p>
-                    <p th:text="${classEntry.value.room}"></p>
+                    <!-- This div will hold the className, type, and room, ensuring they always appear at the top -->
+                    <div>
+                        <p th:text="${classEntry.value.className}"></p>
+                        <p th:text="${classEntry.value.type}"></p>
+                        <p th:text="${classEntry.value.room}"></p>
+                    </div>
                     <ul>
                         <li class="lector" th:each="lecturer : ${classEntry.value.lector}" th:if="${!lecturer.isEmpty()}" th:text="${lecturer}"></li>
                     </ul>
@@ -41,6 +44,6 @@
     </tr>
     </tbody>
 </table>
-<script src="/rasp.js"></script>
+<script src="/js/rasp.js"></script>
 </body>
 </html>

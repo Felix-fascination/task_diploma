@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-    width: 300px;
+    width: 500px;
     padding: 16px;
     background-color: #fff;
     border-radius: 8px;
@@ -32,7 +32,7 @@ label {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: calc(100% - 20px); /* 20px to account for 10px padding on both sides */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;

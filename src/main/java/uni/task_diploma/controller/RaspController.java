@@ -28,20 +28,17 @@ public class RaspController {
                               HttpServletResponse response, Model model){
         raspService.makeModel(model,raspUrl, groupName);
         cookieService.setGroupName(response, groupName);
-
         return "rasp";
     }
 
+    @ResponseBody
     @PostMapping("/comment/post")
     public void postComment(@RequestBody Comment comment, HttpServletRequest request){
-        // Todo add a commentator through cookiew
+        // Todo add a commentator through cookie
         String groupName = cookieService.getGroupName(request);
         String commentatorName = cookieService.getCommentatorName(request);
         comment.setCommentatorName(commentatorName);
         raspTables.addComment(groupName, comment);
-
-
-
 
     }
 }

@@ -6,7 +6,15 @@ body {
 
 h1 {
     text-align: center;
-    padding: 20px 0;
+    padding: 10px 0;
+}
+
+p {
+    margin-bottom: 2px;
+    font-size: 0.8em;
+}
+li{
+    font-size: 0.8em
 }
 
 table.schedule {
@@ -17,10 +25,13 @@ table.schedule {
 
 table.schedule td, table.schedule th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
     vertical-align: top;
-    min-height: 100px; /* adjust as needed */
+    height: 50px; /* adjust as needed */
+}
+table.schedule td{
+
 }
 
 .schedule td div {
@@ -38,9 +49,7 @@ table.schedule th {
     color: white;
 }
 
-table.schedule td div:hover {
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-}
+
 
 form {
     margin-top: 10px;
@@ -60,8 +69,8 @@ form {
 
 .shadow {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
     padding: 10px;
     border-radius: 5px;
-    height: 100%;
-    min-height: 400px;
+    height: 150px;
 }

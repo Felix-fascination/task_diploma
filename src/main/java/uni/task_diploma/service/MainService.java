@@ -25,7 +25,6 @@ public class MainService {
             Document document = Jsoup
                     .connect(UrlParsingConstants.RASP_MAIN_PAGE)
                     .get();
-
             // Extract data from specific elements
             groupElements = new TreeMap<>();
             getGroupElements(document, groupElements, ParseFieldsMain.FirstCourse, 1);
