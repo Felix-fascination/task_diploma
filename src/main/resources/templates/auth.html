@@ -3,10 +3,34 @@
 <head>
   <title>Авторизация</title>
   <link rel="stylesheet" href="/css/auth.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('form').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting normally
+
+        // Get the input value
+        var name = $('#name').val();
+
+        // Send AJAX request
+        $.ajax({
+          url: '/authenticate?name=' + name,
+          type: 'POST',
+          success: function() {
+            window.location.href = '/main';
+          },
+          error: function() {
+            // Handle error if needed
+            alert('An error occurred during authentication.');
+          }
+        });
+      });
+    });
+  </script>
 </head>
 <body>
 <div class="container">
-  <form action="/main/" method="get">
+  <form>
     <h2>Вход</h2>
     <div class="input-group">
       <label for="name">Введите ваше имя</label>

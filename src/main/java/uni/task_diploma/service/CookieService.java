@@ -53,6 +53,6 @@ public class CookieService {
                 }
             }
         }
-        throw new RuntimeException("No commentator name");
+        return null;
     }
 }

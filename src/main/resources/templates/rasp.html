@@ -8,6 +8,28 @@
 </head>
 <body>
 <h1>Расписание</h1>
+<div class="switcher">
+    <label for="evenSwitchNo">Odd:</label>
+    <input type="radio" id="evenSwitchNo" name="evenSwitch" value="0" onchange="switchRasp()" th:checked="${even == 0}" />
+    <span class="radio-label">No</span>
+
+    <input type="radio" id="evenSwitchYes" name="evenSwitch" value="1" onchange="switchRasp()" th:checked="${even == 1}" />
+    <span class="radio-label">Yes</span>
+
+    <script>
+        function switchRasp() {
+            const evenSwitch = document.querySelector('input[name="evenSwitch"]:checked');
+            const groupName = "your_group_name"; // Replace "your_group_name" with the actual group name parameter value
+            const urlParams = new URLSearchParams(window.location.search);
+            const raspUrl = urlParams.get("raspUrl");
+            const evenParam = evenSwitch.value;
+            const newUrl = "/rasp?raspUrl=" + encodeURIComponent(raspUrl) + "&odd=" + encodeURIComponent(evenParam) + "&groupName=" + encodeURIComponent(groupName);
+            window.location.href = newUrl;
+        }
+    </script>
+</div>
+
+
 <table class="schedule">
     <thead>
     <tr>
@@ -27,15 +49,13 @@
                         <p th:text="${classEntry.value.type}"></p>
                         <p th:text="${classEntry.value.room}"></p>
                     </div>
-                    <ul>
-                        <li class="lector" th:each="lecturer : ${classEntry.value.lector}" th:if="${!lecturer.isEmpty()}" th:text="${lecturer}"></li>
-                    </ul>
+                    <p class="lector" th:each="lecturer : ${classEntry.value.lector}" th:if="${!lecturer.isEmpty()}" th:text="${lecturer}"></p>
                     <p class="comment" th:if="${classEntry.value.comment != null}" th:text="${classEntry.value.comment}"></p>
                     <p class="commentator" th:if="${classEntry.value.commentator != null}" th:text="'Comment by: ' + ${classEntry.value.commentator}"></p>
                     <form th:if="${!classEntry.value.className.isEmpty()}" th:action="@{/rasp/comment/post}" method="post">
                         <input type="hidden" name="day" th:value="${day}" />
                         <input type="hidden" name="time" th:value="${time}" />
-                        <textarea name="comment" placeholder="Оставить комментарий"></textarea>
+                        <textarea name="comment" placeholder="Оставить комментарий" style="width: 100%;"></textarea>
                         <input type="submit" value="Отправить" />
                     </form>
                 </div>

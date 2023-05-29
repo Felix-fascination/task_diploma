@@ -1,6 +1,7 @@
 package uni.task_diploma.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,7 +13,6 @@ import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.RaspTable;
 import uni.task_diploma.module.RaspTables;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,16 +21,17 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RaspService {
 
     private final RaspTables raspTables;
 
-    public void makeModel(Model model, String raspUrl, String groupName) {
-        if (raspTables.isPresent(groupName)){
-            getModel(model, groupName);
+    public void makeModel(Model model, String raspUrl, String groupName, Boolean odd) {
+        if (raspTables.isPresent(groupName, odd)){
+            getModel(model, groupName, odd);
             return;
         }
-        Document document = getDocument(raspUrl);
+        Document document = getDocument(raspUrl, odd);
         // Parse the HTML to extract the elements you want
         Elements raspDays = document.select(ParseFieldRasp.RASP_DAY);
         Elements dayOfWeek = document.select(ParseFieldRasp.RASP_DAY_OF_WEEK);
@@ -101,32 +102,32 @@ public class RaspService {
 
         }
         RaspTable raspTable = new RaspTable(classes);
-        createModel(model, raspTable, groupName);
+        createModel(model, raspTable, groupName, odd);
 
     }
 
-    public void createModel(Model model, RaspTable raspTable, String groupName ){
+    public void createModel(Model model, RaspTable raspTable, String groupName, Boolean odd){
         List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
         List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
 
         model.addAttribute("classTimes", timesOfDay);
         model.addAttribute("daysOfWeek", daysOfWeek);
-        model.addAttribute("scheduleData", raspTables.putTable(groupName, raspTable));
+        model.addAttribute("scheduleData", raspTables.putTable(groupName, odd,raspTable));
     }
 
-    private void getModel(Model model, String groupName){
+    private void getModel(Model model, String groupName, Boolean odd){
         List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
         List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
 
         model.addAttribute("classTimes", timesOfDay);
         model.addAttribute("daysOfWeek", daysOfWeek);
-        model.addAttribute("scheduleData", raspTables.getTable(groupName));
+        model.addAttribute("scheduleData", raspTables.getTable(groupName, odd));
     }
 
-    private Document getDocument(String raspUrl) {
+    private Document getDocument(String raspUrl, Boolean odd) {
         try{
             return Jsoup
-                    .connect(raspUrl)
+                    .connect(raspUrl + "?odd=" + (odd ? "1" : "0"))
                     .get();
         } catch (IOException e) {
             throw new RuntimeException(e);
