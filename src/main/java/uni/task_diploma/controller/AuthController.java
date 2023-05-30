@@ -6,16 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uni.task_diploma.service.AuthService;
-import uni.task_diploma.service.CookieService;
 
 import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
 public class AuthController {
 
 
@@ -26,8 +23,8 @@ public class AuthController {
         return "auth";
     }
 
-    @PostMapping("/authenticate")
-    public HttpStatus authenticate(@RequestParam String name, HttpServletResponse response) throws IOException {
-        return authService.authenticate(name, response);
+    @PostMapping("/user/authenticate")
+    public void authenticate(@RequestParam String name, HttpServletResponse response) throws IOException {
+        authService.authenticate(name, response);
     }
 }

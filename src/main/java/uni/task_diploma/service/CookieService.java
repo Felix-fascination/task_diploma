@@ -38,8 +38,6 @@ public class CookieService {
         // Установка атрибутов cookie
         cookie.setPath("/"); // Устанавливает путь, доступный для cookie на всем сайте
         cookie.setMaxAge(86400); // Устанавливает срок действия cookie (в секундах). Здесь 86400 секунд равны 24 часам.
-        cookie.setHttpOnly(true); // Устанавливает атрибут HttpOnly, чтобы предотвратить доступ к cookie из JavaScript
-
         response.addCookie(cookie);
     }
 

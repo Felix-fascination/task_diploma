@@ -20,19 +20,20 @@ public class AuthService {
 
 
 
-    public HttpStatus authenticate(String name, HttpServletResponse response) {
+    public void authenticate(String name, HttpServletResponse response) {
+        //log.error("Use got here to authent");
         cookieService.setCommentatorName(response, name);
         if (name.isEmpty()) {
-            return HttpStatus.UNAUTHORIZED;
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, "password"));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, null));
         }
         catch (Exception e){
-            return HttpStatus.UNAUTHORIZED;
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
         log.info("Authentication was successful: " + name);
-        return HttpStatus.OK;
+        response.setStatus(HttpStatus.OK.value());
     }
 
 }
