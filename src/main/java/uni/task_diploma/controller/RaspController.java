@@ -30,7 +30,7 @@ public class RaspController {
                               @RequestParam(required = false) Boolean odd,
                               HttpServletResponse response, Model model){
         if (odd == null) odd = false;
-        log.info(odd.toString());
+        //log.info(odd.toString());
         raspService.makeModel(model,raspUrl, groupName, odd);
         cookieService.setGroupName(response, groupName);
         return "rasp";
@@ -38,9 +38,10 @@ public class RaspController {
 
     @ResponseBody
     @PostMapping("/comment/post")
-    public void postComment(@RequestBody Comment comment,@RequestParam Boolean odd,
+    public void postComment(@RequestBody Comment comment, @RequestParam(required = false) Boolean odd,
                             HttpServletRequest request){
         // Todo add a commentator through cookie
+        if (odd == null) odd = false;
         String groupName = cookieService.getGroupName(request);
         String commentatorName = cookieService.getCommentatorName(request);
         comment.setCommentatorName(commentatorName);

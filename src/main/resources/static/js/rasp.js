@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         // Construct the new action URL with the "odd" parameter
         if (oddParam) {
-            actionUrl += "?odd=" + encodeURIComponent(oddParam);
+            actionUrl += "&odd=" + encodeURIComponent(oddParam);
         }
 
         var json = JSON.stringify(data);

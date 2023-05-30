@@ -11,8 +11,6 @@
 
         // Get the input value
         var name = $('#name').val();
-
-        // Send AJAX request
         $.ajax({
           type: 'POST',
           url: 'http://localhost:8080/user/authenticate?name=' + name,
