@@ -76,6 +76,7 @@ $('.filter__search').on('click', function() {
 	$('.filter').addClass('filter_active');
 	$('.shedule').addClass('shedule_active');
 	$('body').addClass('page_search');
+	console.log($('#ODD').is(':checked'));
 	$(this).blur();
 });
 
