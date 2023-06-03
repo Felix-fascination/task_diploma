@@ -1,0 +1,214 @@
+.page_search {
+	position: relative;
+	display: grid;
+	grid-template-rows: 100px 1fr;
+}
+
+.filter {
+	z-index: 20;
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+.filter_active {
+	height: auto;
+}
+.filter__body {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr) auto;
+	gap: 4px;
+}
+.filter__item {
+	display: block;
+	position: relative;
+}
+.filter__input {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: 15px 20px;
+	padding-right: 50px;
+	border: 1px solid var(--color__soft-secondary);
+	font: inherit;
+	color: var(--color__font);
+	transition: 200ms ease;
+}
+.filter__input::placeholder {
+	color: #aeaeaf;
+}
+.filter__input:focus {
+	outline: none;
+	box-shadow: 0 0 5px 0 var(--color__primary);
+}
+.filter__item:first-child .filter__input {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.filter__item:last-child .filter__input {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.filter__selection {
+	position: absolute;
+	border: 1px solid var(--color__soft-secondary);
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	min-width: 100%;
+	background-color: #FFF;
+	margin-top: 2px;
+	box-shadow: 0 5px 15px 0 rgba(0,0,0,.2);
+	border-radius: 10px;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 400ms ease, visibility 0ms 400ms;
+}
+.filter__selection_active {
+	opacity: 1;
+	visibility: visible;
+	transition: color 200ms ease, opacity 400ms ease, visibility 0ms 0ms;
+}
+.filter__option {
+	padding: 10px;
+	cursor: pointer;
+	transition: 200ms ease;
+	border-radius: 5px;
+	color: var(--color__font);
+}
+.filter__option:hover {
+	background-color: #7bc8ff;
+}
+
+
+.filter__search {
+	display: block;
+	width: auto;
+	color: #FFF;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	background-color: var(--color__soft-secondary);
+	padding: 10px 35px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	font: inherit;
+	cursor: pointer;
+	transition: 200ms ease;
+	pointer-events: none;
+}
+.filter__search_available {
+	pointer-events: all;
+	background-color: var(--color__soft-primary);
+}
+.filter__search_available:focus,
+.filter__search_available:hover {
+	outline: none;
+	box-shadow: 0 0 5px 0 var(--color__primary);
+}
+
+
+.shedule {
+	margin: 0 20px 20px;
+	overflow: auto;
+	grid-row: 2;
+	display: none;
+}
+.shedule::-webkit-scrollbar {
+	width: 0;
+}
+.shedule_active {
+	display: block;
+	max-height: calc(100vh - 120px);
+}
+.shedule__body {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	grid-template-columns: auto repeat(6, 1fr);
+	gap: 5px;
+}
+.shedule__header {
+	display: flex;
+	align-items: center;
+	padding: 10px 20px;
+	transition: 200ms ease;
+	backdrop-filter: blur(15px) ;
+	border: 1px solid rgba(66, 175, 255, 0.8);
+	background-color: rgba(66, 175, 255, 0.4);
+}
+.shedule__header:first-child:not(.shedule__time) {
+	border-top-left-radius: 10px;
+}
+.shedule__header:nth-child(7):not(.shedule__time) {
+	border-top-right-radius: 10px;
+}
+.shedule__time:last-child {
+	border-bottom-left-radius: 10px;
+}
+.shedule__header:not(.shedule__time) {
+	z-index: 10;
+	position: sticky;
+	top: 0;
+}
+.shedule__time.shedule__header {
+	position: sticky;
+	left: -20px;
+}
+.shedule__header_active {
+	background-color: var(--color__soft-primary);
+}
+.shedule__item {
+	display: block;
+}
+
+.event {
+	display: block;
+	transition: 200ms ease;
+}
+.event__body {
+	padding: 15px;
+	border: 1px solid var(--color__soft-secondary);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	background-color: #99999921;
+	gap: 20px;
+	/* border-radius: 5px; */
+	transition: 200ms ease;
+}
+.event__body:hover {
+	background-color: #FFF;
+}
+.event__title {
+	font-size: 20px;
+}
+.event__info {
+	display: block;
+}
+.event__message {
+	resize: none;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	font: inherit;
+	padding: 10px;
+	background-color: transparent;
+}
+.event__message::placeholder {
+	color: transparent;
+}
+.event__message:focus {
+	outline: none;
+}
+
+.event:hover {
+	z-index: 1;
+	box-shadow: 0 5px 15px 0 rgba(0,0,0,.2);
+}
+.event:hover .event__message {
+	border: 1px solid var(--color__soft-secondary);
+	background-color: #FFF;
+}
+.event:hover .event__message::placeholder {
+	color: #aeaeaf;
+}

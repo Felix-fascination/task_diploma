@@ -1,0 +1,40 @@
+@font-face {
+	font-family: "Lato";
+	src: url(../fonts/Lato-Regular.ttf);
+	font-style: normal;
+	font-weight: 400;
+}
+@font-face {
+	font-family: "Lato";
+	src: url(../fonts/Lato-Medium.ttf);
+	font-style: normal;
+	font-weight: 500;
+}
+
+
+*,
+::before,
+::after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+
+:root {
+	--color__primary: #3270e7;
+	--color__soft-primary: #42afff;
+	--color__soft-secondary: #d0d0d0;
+	--color__font: #020202;
+	--font__primary: 'Lato';
+	font: 400 16px/1.2 var(--font__primary);
+}
+::selection {
+	background-color: var(--color__primary);
+	color: #FFF;
+}
+
+
+body {
+	background-color: #efeffa;
+}
