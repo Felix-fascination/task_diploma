@@ -66,6 +66,9 @@
 	visibility: hidden;
 	transition: opacity 400ms ease, visibility 0ms 400ms;
 }
+.filter__selection:empty:before {
+	content: "Введите данные";
+}
 .filter__selection_active {
 	opacity: 1;
 	visibility: visible;
