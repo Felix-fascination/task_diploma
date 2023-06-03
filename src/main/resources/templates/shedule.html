@@ -28,6 +28,11 @@
 				<div class="filter__selection"><span class="filter__option" th:each="courseEntry : ${groupMape}" th:text="${courseEntry.getKey()}"></span></div>
 			</div>
 			<input type='button' value="Поиск" class="filter__search" tabindex="-1" />
+			<div class="switcher">
+				<input type="checkbox" class="switcher__checkbox" />
+				<span class="switcher__item switcher__item_even" onclick='$(".switcher__checkbox").attr("checked", true)'>Четная неделя</span>
+				<span class="switcher__item switcher__item_odd" onclick='$(".switcher__checkbox").attr("checked", false)'>Нечетная неделя</span>
+			</div>
 		</div>
 	</div>
 

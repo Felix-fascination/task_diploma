@@ -1,7 +1,7 @@
 .page_search {
 	position: relative;
 	display: grid;
-	grid-template-rows: 100px 1fr;
+	grid-template-rows: 150px 1fr;
 }
 
 .filter {
@@ -17,7 +17,7 @@
 .filter__body {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr) auto;
-	gap: 4px;
+	gap: 10px 4px;
 }
 .filter__item {
 	display: block;
@@ -110,6 +110,49 @@
 .filter__search_available:hover {
 	outline: none;
 	box-shadow: 0 0 5px 0 var(--color__primary);
+}
+
+
+.switcher {
+	display: flex;
+	grid-column: 1 / 5;
+	justify-self: end;
+}
+.switcher__checkbox {
+	position: absolute;
+	opacity: 0;
+	visibility: hidden;
+}
+.switcher__item {
+	cursor: pointer;
+	display: block;
+	border: 1px solid var(--color__soft-secondary);
+	padding: 10px 15px;
+	border-radius: 10px;
+	background-color: #FFF;
+	transition: 200ms ease;
+}
+.switcher__item:hover {
+	box-shadow: 0 0 5px 0 var(--color__primary);
+}
+.switcher__item_even {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: 0;
+}
+.switcher__item_odd {
+	background-color: var(--color__soft-primary);
+	border-color: transparent;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.switcher__checkbox:checked ~ .switcher__item_even {
+	background-color: var(--color__soft-primary);
+	border-color: transparent;
+}
+.switcher__checkbox:checked ~ .switcher__item_odd {
+	background-color: #FFF;
+	border-color: var(--color__soft-secondary);
 }
 
 
