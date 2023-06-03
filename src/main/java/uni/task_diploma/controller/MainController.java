@@ -12,20 +12,15 @@ import uni.task_diploma.service.CookieService;
 import uni.task_diploma.service.MainService;
 
 @Controller
-@RequestMapping("/main")
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
 
     private final MainService mainService;
 
-    private final CookieService cookieService;
-
-    @GetMapping("/")
-    public String getMainPage(@RequestParam String name, Model model,
+    @GetMapping("/main")
+    public String getMainPage(Model model,
                               HttpServletResponse response){
-        log.warn("getMainPage");
-        cookieService.setCommentatorName(response, name);
         mainService.makeMainPageModel(model);
         return "main";
     }

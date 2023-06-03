@@ -9,24 +9,25 @@
 <body>
 <h1>Расписание</h1>
 <div class="switcher">
+    <!-- Без понятия, как соотнести радио кнопки, чтобы они были прожатыми при использовании скрипта-->
     <label for="evenSwitchNo">Odd:</label>
-    <input type="radio" id="evenSwitchNo" name="evenSwitch" value="0" onchange="switchRasp()" th:checked="${even == 0}" />
+    <input type="radio" id="evenSwitchNo" name="evenSwitch" value="0" onchange="switchRasp()"/>
     <span class="radio-label">No</span>
-
-    <input type="radio" id="evenSwitchYes" name="evenSwitch" value="1" onchange="switchRasp()" th:checked="${even == 1}" />
+    <input type="radio" id="evenSwitchYes" name="evenSwitch" value="1" onchange="switchRasp()"/>
     <span class="radio-label">Yes</span>
 
     <script>
         function switchRasp() {
             const evenSwitch = document.querySelector('input[name="evenSwitch"]:checked');
-            const groupName = "your_group_name"; // Replace "your_group_name" with the actual group name parameter value
             const urlParams = new URLSearchParams(window.location.search);
             const raspUrl = urlParams.get("raspUrl");
+            const groupName = urlParams.get("groupName");
             const evenParam = evenSwitch.value;
             const newUrl = "/rasp?raspUrl=" + encodeURIComponent(raspUrl) + "&odd=" + encodeURIComponent(evenParam) + "&groupName=" + encodeURIComponent(groupName);
             window.location.href = newUrl;
         }
     </script>
+    <!-- Добавить кнопку обратно на страницу-->
 </div>
 
 
@@ -52,6 +53,9 @@
                     <p class="lector" th:each="lecturer : ${classEntry.value.lector}" th:if="${!lecturer.isEmpty()}" th:text="${lecturer}"></p>
                     <p class="comment" th:if="${classEntry.value.comment != null}" th:text="${classEntry.value.comment}"></p>
                     <p class="commentator" th:if="${classEntry.value.commentator != null}" th:text="'Comment by: ' + ${classEntry.value.commentator}"></p>
+                    <!-- не работает оставление комментария из - за отсутствия параметра odd - именно поэтому комменты стали
+                    оставляться только после использования хотя бы раз радиобокса-->
+                    <!-- сейчас оставляются только в самом начале, после нажатия на радио боксы перестают оставляться из - за проблем с request params -->
                     <form th:if="${!classEntry.value.className.isEmpty()}" th:action="@{/rasp/comment/post}" method="post">
                         <input type="hidden" name="day" th:value="${day}" />
                         <input type="hidden" name="time" th:value="${time}" />
