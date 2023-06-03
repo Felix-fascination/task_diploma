@@ -91,7 +91,18 @@ $('.event').on('mouseleave', function() {
 
 
 $('.filter__option').on('click', function() {
-	const course = $('.filter__input[data-filter=course]').val();
-	const faculty = $('.filter__input[data-filter=faculty]').val();
-	console.log(`[course: ${course}, faculty: ${faculty}]`);
+	const requestBody = {
+		course: $('.filter__input[data-filter=course]').val(),
+		faculty: $('.filter__input[data-filter=faculty]').val()
+	};
+	if(requestBody.course && requestBody.faculty) {
+		$.ajax({
+			url: '/sendQueryForGetGroups',
+			type: 'POST',
+			data: JSON.stringify(requestBody),
+			success: function(response) {
+				$('.filter__selection[data-filter-selection=group]').html(response);
+			},
+		});
+	}
 });
