@@ -30,7 +30,17 @@ public class MainService {
             getGroupElements(document, groupElements, ParseFieldsMain.FirstCourse, 1);
             getGroupElementsFromOtherCourses(document, groupElements);
 
+            Set<String> entry = null;
+            for(int i = 0; i < 1; i++) {
+                entry = groupElements.get("1 курс").keySet();
+            }
+
             model.addAttribute("groupMap", groupElements);
+            model.addAttribute("Faculties", entry);
+            /*for(GroupElement en : groupElements.get("1 курс").get("факультет")){
+
+            }*/
+
 
         }
         catch (IOException e) {

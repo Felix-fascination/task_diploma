@@ -23,7 +23,7 @@ public class AuthController {
         return "index";
     }
 
-    @PostMapping("/user/authenticate")
+    @PostMapping("/authenticate")
     public void authenticate(@RequestParam String name, HttpServletResponse response) throws IOException {
         authService.authenticate(name, response);
     }

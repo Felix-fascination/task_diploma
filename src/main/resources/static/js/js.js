@@ -8,15 +8,7 @@ $('.auth__input').on('input', function() {
 
 $('.auth__input').on('keydown', function(e) {
 	if((e.key === 'Enter') && $('.auth__input').val()) {
-		alert('Вошли в систему');
-	}
-});
-
-$('.auth__entry').on('click', function() {
-	if($('.auth__input').val()) {
 		var name = $('.auth__input').val();
-
-		// Send AJAX request
 		$.ajax({
 			url: '/authenticate?name=' + name,
 			type: 'POST',
@@ -24,7 +16,22 @@ $('.auth__entry').on('click', function() {
 				window.location.href = '/main';
 			},
 			error: function() {
-				// Handle error if needed
+				alert('An error occurred during authentication.');
+			}
+		});
+	}
+});
+
+$('.auth__entry').on('click', function() {
+	if($('.auth__input').val()) {
+		var name = $('.auth__input').val();
+		$.ajax({
+			url: '/authenticate?name=' + name,
+			type: 'POST',
+			success: function() {
+				window.location.href = '/main';
+			},
+			error: function() {
 				alert('An error occurred during authentication.');
 			}
 		});
@@ -80,3 +87,4 @@ $('.event').on('mouseleave', function() {
 	$('#' + $(this).data('column')).removeClass('shedule__header_active');
 	$('#' + $(this).data('row')).removeClass('shedule__header_active');
 });
+

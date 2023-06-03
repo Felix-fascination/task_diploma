@@ -22,7 +22,7 @@ public class MainController {
     public String getMainPage(Model model,
                               HttpServletResponse response){
         mainService.makeMainPageModel(model);
-        return "main";
+        return "shedule";
     }
 
 

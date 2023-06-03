@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,27 +14,19 @@
 			<div class="filter__item">
 				<input class="filter__input" placeholder="Курс" type="text" />
 				<div class="filter__selection">
-					<span class="filter__option">1 курс</span>
-					<span class="filter__option">2 курс</span>
-					<span class="filter__option">3 курс</span>
-					<span class="filter__option">4 курс</span>
-					<span class="filter__option">5 курс</span>
+					<span class="filter__option" th:each="courseEntry : ${groupMap}" th:text="${courseEntry.getKey()}"></span>
 				</div>
 			</div>
 			<div class="filter__item">
-				<input class="filter__input" placeholder="Специальность" type="text" />
+				<input class="filter__input" placeholder="Факультет" type="text" />
 				<div class="filter__selection">
-					<span class="filter__option">Специальность 1</span>
-					<span class="filter__option">Специальность 2</span>
-					<span class="filter__option">Специальность 3</span>
+					<span class="filter__option" th:each="faculty : ${Faculties}" th:text="${faculty}"></span>
 				</div>
 			</div>
 			<div class="filter__item">
 				<input class="filter__input" placeholder="Группа" type="text" />
 				<div class="filter__selection">
-					<span class="filter__option">1511БЦ</span>
-					<span class="filter__option">2023</span>
-					<span class="filter__option">7115</span>
+					<span class="filter__option" >1511БЦ</span>
 				</div>
 			</div>
 			<input type='button' value="Поиск" class="filter__search" tabindex="-1" />

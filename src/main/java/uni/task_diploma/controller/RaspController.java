@@ -30,7 +30,6 @@ public class RaspController {
                               @RequestParam(required = false) Boolean odd,
                               HttpServletResponse response, Model model){
         if (odd == null) odd = false;
-        //log.info(odd.toString());
         raspService.makeModel(model,raspUrl, groupName, odd);
         cookieService.setGroupName(response, groupName);
         return "rasp";
