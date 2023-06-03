@@ -25,7 +25,7 @@
 			</div>
 			<div class="filter__item">
 				<input class="filter__input" data-filter="group" placeholder="Группа" type="text" />
-				<div class="filter__selection"><span class="filter__option" th:each="courseEntry : ${groupMape}" th:text="${courseEntry.getKey()}"></span></div>
+				<div class="filter__selection" data-filter-selection="group"></div>
 			</div>
 			<input type='button' value="Поиск" class="filter__search" tabindex="-1" />
 			<div class="switcher">
