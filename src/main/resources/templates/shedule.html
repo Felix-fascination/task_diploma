@@ -12,19 +12,19 @@
 	<div class="filter">
 		<div class="filter__body">
 			<div class="filter__item">
-				<input class="filter__input" placeholder="Курс" type="text" />
+				<input class="filter__input" data-filter="course" placeholder="Курс" type="text" />
 				<div class="filter__selection">
 					<span class="filter__option" th:each="courseEntry : ${groupMap}" th:text="${courseEntry.getKey()}"></span>
 				</div>
 			</div>
 			<div class="filter__item">
-				<input class="filter__input" placeholder="Факультет" type="text" />
+				<input class="filter__input" data-filter="faculty" placeholder="Факультет" type="text" />
 				<div class="filter__selection">
 					<span class="filter__option" th:each="faculty : ${Faculties}" th:text="${faculty}"></span>
 				</div>
 			</div>
 			<div class="filter__item">
-				<input class="filter__input" placeholder="Группа" type="text" />
+				<input class="filter__input" data-filter="group" placeholder="Группа" type="text" />
 				<div class="filter__selection"><span class="filter__option" th:each="courseEntry : ${groupMape}" th:text="${courseEntry.getKey()}"></span></div>
 			</div>
 			<input type='button' value="Поиск" class="filter__search" tabindex="-1" />

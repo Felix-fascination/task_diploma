@@ -88,3 +88,9 @@ $('.event').on('mouseleave', function() {
 	$('#' + $(this).data('row')).removeClass('shedule__header_active');
 });
 
+
+$('.filter__option').on('click', function() {
+	const course = $('.filter__input[data-filter=course]').val();
+	const faculty = $('.filter__input[data-filter=faculty]').val();
+	console.log(`[course: ${course}, faculty: ${faculty}]`);
+});
