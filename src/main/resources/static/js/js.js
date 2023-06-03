@@ -76,7 +76,22 @@ $('.filter__search').on('click', function() {
 	$('.filter').addClass('filter_active');
 	$('.shedule').addClass('shedule_active');
 	$('body').addClass('page_search');
-	console.log($('#ODD').is(':checked'));
+
+	const requestBody = {
+		course: $('.filter__input[data-filter=course]').val(),
+		faculty: $('.filter__input[data-filter=faculty]').val(),
+		group: $('.filter__input[data-filter=group]').val(),
+		isODD: $('#ODD').is(':checked'),
+	}
+	$.ajax({
+		url: '/sendRequestForGetHTMLTable',
+		type: 'POST',
+		data: JSON.stringify(requestBody),
+		success: function(response) {
+			$('.shedule__body').html(response);
+		},
+	});
+
 	$(this).blur();
 });
 
