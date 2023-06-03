@@ -24,6 +24,7 @@ public class MainController {
     @GetMapping("/")
     public String getMainPage(@RequestParam String name, Model model,
                               HttpServletResponse response){
+        log.warn("getMainPage");
         cookieService.setCommentatorName(response, name);
         mainService.makeMainPageModel(model);
         return "main";

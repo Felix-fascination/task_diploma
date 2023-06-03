@@ -14,7 +14,20 @@ $('.auth__input').on('keydown', function(e) {
 
 $('.auth__entry').on('click', function() {
 	if($('.auth__input').val()) {
-		alert('Вошли в систему');
+		var name = $('.auth__input').val();
+
+		// Send AJAX request
+		$.ajax({
+			url: '/authenticate?name=' + name,
+			type: 'POST',
+			success: function() {
+				window.location.href = '/main';
+			},
+			error: function() {
+				// Handle error if needed
+				alert('An error occurred during authentication.');
+			}
+		});
 	}
 });
 

@@ -23,7 +23,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getAuthPage(){
-        return "auth";
+        return "index";
     }
 
     @PostMapping("/authenticate")
