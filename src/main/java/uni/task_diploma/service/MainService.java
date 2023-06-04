@@ -1,11 +1,13 @@
 package uni.task_diploma.service;
 
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.constants.ParseFieldsMain;
 import uni.task_diploma.constants.UrlParsingConstants;
 import uni.task_diploma.module.GroupElement;
@@ -14,7 +16,10 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class MainService {
+
+    private final ParaRepository paraRepository;
 
     public void makeMainPageModel(Model model){
         // First key is course
@@ -37,11 +42,6 @@ public class MainService {
 
             model.addAttribute("groupMap", groupElements);
             model.addAttribute("Faculties", entry);
-            /*for(GroupElement en : groupElements.get("1 курс").get("факультет")){
-
-            }*/
-
-
         }
         catch (IOException e) {
             e.printStackTrace();

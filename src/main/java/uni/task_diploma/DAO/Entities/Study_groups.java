@@ -1,13 +1,11 @@
 package uni.task_diploma.DAO.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "study_groups")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -16,9 +14,12 @@ import lombok.experimental.FieldDefaults;
 public class Study_groups {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
+    @Column(name = "course_name")
     String courseName;
+    @Column(name = "faculty_name")
     String facultyName;
+    @Column(name = "group_name")
     String groupName;
     String rasp;
 }

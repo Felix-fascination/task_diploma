@@ -1,27 +1,27 @@
 package uni.task_diploma.DAO.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "para")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Para {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
+    @Column(name = "name")
     String paraName;
     String type;
-    String groupName;
-    String rasp;
-
-
+    String room;
+    String lectors;
+    String cmnt;
+    String cmnt_name;
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import uni.task_diploma.DAO.repository.ParaRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,8 @@ public class AuthService {
     private final CookieService cookieService;
 
     private final AuthenticationManager authenticationManager;
+
+    private final ParaRepository paraRepository;
 
 
 
@@ -33,6 +36,8 @@ public class AuthService {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
         log.info("Authentication was successful: " + name);
+        System.out.println(paraRepository.getReferenceById(1));
+
         response.setStatus(HttpStatus.OK.value());
     }
 
