@@ -7,10 +7,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import uni.task_diploma.DAO.repository.ParaRepository;
+import uni.task_diploma.DAO.Entities.Study_groups;
+import uni.task_diploma.DAO.repository.GroupRepository;
 import uni.task_diploma.constants.ParseFieldsMain;
 import uni.task_diploma.constants.UrlParsingConstants;
 import uni.task_diploma.module.GroupElement;
+import uni.task_diploma.module.GroupsRequest;
 
 import java.io.IOException;
 import java.util.*;
@@ -19,58 +21,28 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MainService {
 
+    private final GroupRepository groupRepository;
+
     public void makeMainPageModel(Model model){
-        // First key is course
-        // Second key is faculty name
-        TreeMap<String, Map<String, List<GroupElement>>> groupElements;
-        try{
-            // Connect to the website
-            Document document = Jsoup
-                    .connect(UrlParsingConstants.RASP_MAIN_PAGE)
-                    .get();
-            // Extract data from specific elements
-            groupElements = new TreeMap<>();
-            getGroupElements(document, groupElements, ParseFieldsMain.FirstCourse, 1);
-            getGroupElementsFromOtherCourses(document, groupElements);
+        List<String> courses = Arrays.asList("1 курс", "2 курс", "3 курс", "4 курс", "5 курс");
+        List<String> faculties = new ArrayList<>();
+        faculties.add("Управление перевозками и логистика");
+        faculties.add("Автоматизация и интеллектуальные технологии");
+        faculties.add("Промышленное и гражданское строительство");
+        faculties.add("Экономика и менеджмент");
+        faculties.add("Транспортное строительство");
+        faculties.add("Транспортные и энергетические системы");
 
-            Set<String> entry = null;
-            for(int i = 0; i < 1; i++) {
-                entry = groupElements.get("1 курс").keySet();
-            }
 
-            model.addAttribute("groupMap", groupElements);
-            model.addAttribute("Faculties", entry);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("courses", courses);
+        model.addAttribute("Faculties", faculties);
     }
-
-    public void getGroupElementsFromOtherCourses(Document document, Map<String, Map<String, List<GroupElement>>> groupElements){
-        for(int courseNumber = 2; courseNumber <  6; courseNumber++){
-            getGroupElements(document, groupElements, ParseFieldsMain.otherCourses + courseNumber, courseNumber);
+    public void makeGroupsModel(Model model, GroupsRequest request) {
+        List<Study_groups> groups = groupRepository.getStudyByCourseNameAndFacultyName(request.getCourse(), request.getFaculty());
+        List<String> groups_names = new ArrayList<>(groups.size());
+        for (Study_groups group : groups) {
+            groups_names.add(group.getGroupName());
         }
+        model.addAttribute("groups", groups_names);
     }
-
-    public void getGroupElements(Document document, Map<String, Map<String, List<GroupElement>>> groupElements, String courseField, int courseNumber){
-        Element container = document.selectFirst(courseField);
-        Elements facultyContainers = container.select(ParseFieldsMain.FACULTY_CONTAINERS);
-
-        for(Element facultyContainer : facultyContainers){
-            Elements buttons = facultyContainer.select(ParseFieldsMain.ButtonClass);
-            Element facultyName = facultyContainer.selectFirst(ParseFieldsMain.FACULTY_NAME);
-            for (Element button : buttons){
-                // Extract href value and button name
-                groupElements.computeIfAbsent(courseNumber + " курс", k -> new HashMap<>())
-                        .computeIfAbsent(facultyName.text(), k -> new ArrayList<>())
-                        .add(GroupElement.builder()
-                                .groupName(button.text())
-                                .groupHref(button.attr("href"))
-                                .build()
-                        );
-            }
-        }
-    }
-
-
 }

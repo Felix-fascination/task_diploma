@@ -112,12 +112,15 @@ $('.filter__option').on('click', function() {
 	};
 	if(requestBody.course && requestBody.faculty) {
 		$.ajax({
-			url: '/sendQueryForGetGroups',
+			url: '/main/groups/get',
 			type: 'POST',
 			data: JSON.stringify(requestBody),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
 			success: function(response) {
 				$('.filter__selection[data-filter-selection=group]').html(response);
 			},
+
 		});
 	}
 });
