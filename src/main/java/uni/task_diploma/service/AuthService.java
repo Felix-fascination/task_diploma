@@ -19,9 +19,6 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final ParaRepository paraRepository;
-
-
 
     public void authenticate(String name, HttpServletResponse response) {
         //log.error("Use got here to authent");
@@ -36,8 +33,6 @@ public class AuthService {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
         log.info("Authentication was successful: " + name);
-        System.out.println(paraRepository.getReferenceById(1));
-
         response.setStatus(HttpStatus.OK.value());
     }
 

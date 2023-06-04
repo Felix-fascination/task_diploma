@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Диплом</title>
 	<link href="/css/index.css" rel='stylesheet'>
-	<link href="/css/shedule.css" rel='stylesheet'>
+	<link href="/css/schedule.css" rel='stylesheet'>
 </head>
 <body>
 	<div class="filter">
@@ -14,7 +14,7 @@
 			<div class="filter__item">
 				<input class="filter__input" data-filter="course" placeholder="Курс" type="text" />
 				<div class="filter__selection">
-					<span class="filter__option" th:each="courseEntry : ${groupMap}" th:text="${courseEntry.getKey()}"></span>
+					<span class="filter__option" th:each="course : ${courses}" th:text="${course}"></span>
 				</div>
 			</div>
 			<div class="filter__item">

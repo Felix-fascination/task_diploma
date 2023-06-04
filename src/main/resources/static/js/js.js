@@ -116,7 +116,6 @@ $('.filter__option').on('click', function() {
 			type: 'POST',
 			data: JSON.stringify(requestBody),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
 			success: function(response) {
 				$('.filter__selection[data-filter-selection=group]').html(response);
 			},
