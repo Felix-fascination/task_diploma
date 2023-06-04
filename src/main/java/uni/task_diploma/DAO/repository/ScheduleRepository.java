@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uni.task_diploma.DAO.Entities.StudySchedule;
 
 @Repository
-public interface Schedule extends JpaRepository<StudySchedule, Integer> {
+public interface ScheduleRepository extends JpaRepository<StudySchedule, Integer> {
 }

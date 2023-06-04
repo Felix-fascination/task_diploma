@@ -19,8 +19,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MainService {
 
-    private final ParaRepository paraRepository;
-
     public void makeMainPageModel(Model model){
         // First key is course
         // Second key is faculty name
@@ -74,8 +72,5 @@ public class MainService {
         }
     }
 
-    /*public void getGroupElementsFromFirstCourse(Document document, TreeSet<GroupElement> groupElements){
-
-    }*/
 
 }
