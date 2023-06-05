@@ -177,25 +177,22 @@ public class ScheduleCollector {
                 if (lectors_string.length() > 2) lectors_string = lectors_string.substring(1, lectors_string.length() - 1 );
                 else lectors_string = "";
 
-                List<Lector> lector_entities = new ArrayList<Lector>();
-
-                for(String lector : lectors){
-                    Lector lector_entity = Lector.builder()
-                            .name(lector)
-                            .build();
-
-                    lector_entities.add(lector_entity);
-                    lectorRepository.save(lector_entity);
-                }
 
                 Para para = Para.builder()
                         .paraName(className)
                         .type(classType)
-                        .lector(lector_entities)
                         .room(finalRoom)
                         .build();
 
                 paraRepository.save(para);
+
+                for(String lector : lectors){
+                    Lector lector_entity = Lector.builder()
+                            .name(lector)
+                            .para(para)
+                            .build();
+                    lectorRepository.save(lector_entity);
+                }
 
                 StudySchedule schedule = StudySchedule.builder()
                         .day_of_week(nameOfTheDay)

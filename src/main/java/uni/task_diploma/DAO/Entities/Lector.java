@@ -20,6 +20,7 @@ public class Lector {
     Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "para_id")
     Para para;
 
     String name;

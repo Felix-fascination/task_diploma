@@ -28,9 +28,6 @@ public class Para {
 
     String room;
 
-    @OneToMany(mappedBy ="para")
-    List<Lector> lector;
-
     String cmnt;
 
     String cmnt_name;
