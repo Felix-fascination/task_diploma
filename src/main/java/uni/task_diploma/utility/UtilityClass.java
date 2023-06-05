@@ -3,6 +3,7 @@ package uni.task_diploma.utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import uni.task_diploma.DAO.Entities.StudySchedule;
+import uni.task_diploma.DAO.repository.LectorRepository;
 import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.TimeValue;
@@ -18,9 +19,15 @@ public class UtilityClass {
 
     private final ParaRepository paraRepository;
 
+    private final LectorRepository lectorRepository;
+
     private final List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
     private final List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
     public ClassModule getClassModuleFromSchedule(StudySchedule schedule){
+        List<String> lectors = lectorRepository.getAllByPara(schedule.getPara());
+        String lectors_string = lectors.toString();
+        lectors_string = lectors_string.substring(1, lectors_string.length() - 1);
+
         return  ClassModule.builder()
                 .className(schedule.getPara().getParaName())
                 .comment(schedule.getPara().getCmnt() == null? "" : schedule.getPara().getCmnt())
@@ -29,7 +36,7 @@ public class UtilityClass {
                 .dayNumber(daysOfWeek.indexOf(schedule.getDay_of_week()) + 1)
                 .time(schedule.getTime_of_day())
                 .type(schedule.getPara().getType())
-                .lector(schedule.getPara().getLector().toString().substring(1,schedule.getPara().getLector().toString().length() - 1 ))
+                .lector(lectors_string)
                 .room(schedule.getPara().getRoom())
                 .id(schedule.getId())
                 .build();
