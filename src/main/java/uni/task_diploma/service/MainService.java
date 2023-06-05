@@ -1,14 +1,18 @@
 package uni.task_diploma.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import uni.task_diploma.DAO.Entities.Para;
 import uni.task_diploma.DAO.Entities.Study_groups;
 import uni.task_diploma.DAO.repository.GroupRepository;
+import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.DAO.repository.ScheduleRepository;
 import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.GroupsRequest;
 import uni.task_diploma.module.ScheduleRequest;
+import uni.task_diploma.module.TimeValue;
 import uni.task_diploma.utility.UtilityClass;
 
 import java.util.*;
@@ -20,6 +24,10 @@ public class MainService {
     private final GroupRepository groupRepository;
 
     private final ScheduleRepository scheduleRepository;
+
+    private final ParaRepository paraRepository;
+
+    private final CookieService cookieService;
 
     private final UtilityClass utilityClass;
 
@@ -47,17 +55,13 @@ public class MainService {
     }
 
     public void makeSchedule(Model model, ScheduleRequest request) {
-        addDaysAndTimes(model);
         Study_groups group = groupRepository.getStudyByGroupName(request.getGroup());
-        Map<String, Map<String, ClassModule>> modules =  utilityClass.getClassModulesFromSchedules(scheduleRepository.getStudyScheduleByGroupsAndOdd(group, request.getIsODD()));
-        model.addAttribute("modulesMap", modules);
+        Map<TimeValue, List<ClassModule>> modules =  utilityClass.getClassModulesFromSchedules(scheduleRepository.getStudyScheduleByGroupsAndOdd(group, request.getIsODD()));
+        model.addAttribute("modules", modules);
     }
 
-    private void addDaysAndTimes(Model model){
-        //List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
-        List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
-
-        model.addAttribute("classTimes", timesOfDay);
-        //model.addAttribute("daysOfWeek", daysOfWeek);
+    public void postComment(String comment, Integer paraId, HttpServletRequest request) {
+        comment = "Заметка: " + comment;
+        paraRepository.updateById(paraId, comment, "Автор заметки: " + cookieService.getCommentatorName(request));
     }
 }

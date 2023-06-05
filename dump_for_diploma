@@ -5,13 +5,17 @@ CREATE TABLE study_groups (
     group_name varchar(255),
     rasp varchar(255)
 );
+CREATE TABLE lectors (
+    id serial PRIMARY KEY,
+    name varchar(255)
+);
 
 CREATE TABLE para (
     id serial PRIMARY KEY,
     name varchar(255),
     type varchar(255),
     room varchar(255),
-    lectors varchar(255),
+    lector_id integer REFERENCES lectors (id),
     cmnt text,
     cmnt_name varchar(255)
 );
@@ -24,8 +28,3 @@ CREATE TABLE study_schedule (
     para_id integer REFERENCES para (id),
     odd boolean
 );
-
-
-
-
-

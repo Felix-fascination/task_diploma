@@ -1,13 +1,12 @@
 package uni.task_diploma.DAO.Entities;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 @Entity
-@Table(name = "para")
+@Table(name = "lectors")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,23 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Builder
-public class Para {
-
+public class Lector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(name = "name")
-    String paraName;
+    @ManyToOne
+    Para para;
 
-    String type;
-
-    String room;
-
-    @OneToMany(mappedBy ="para")
-    List<Lector> lector;
-
-    String cmnt;
-
-    String cmnt_name;
+    String name;
 }

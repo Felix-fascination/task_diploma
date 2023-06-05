@@ -1,13 +1,12 @@
 package uni.task_diploma.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import uni.task_diploma.module.GroupsRequest;
 import uni.task_diploma.module.ScheduleRequest;
 import uni.task_diploma.service.MainService;
@@ -37,6 +36,14 @@ public class MainController {
                               @RequestBody ScheduleRequest request){
         mainService.makeSchedule(model, request);
         return "schedule_body";
+    }
+
+    @ResponseBody
+    @PostMapping("/main/comment/post")
+    public void postComment(@RequestParam String comment, @RequestParam Integer paraId,
+                            HttpServletRequest request){
+        log.info("{} + {}", comment, paraId);
+        mainService.postComment(comment, paraId, request);
     }
 
 

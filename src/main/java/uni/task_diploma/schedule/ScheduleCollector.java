@@ -8,10 +8,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import uni.task_diploma.DAO.Entities.Lector;
 import uni.task_diploma.DAO.Entities.Para;
 import uni.task_diploma.DAO.Entities.StudySchedule;
 import uni.task_diploma.DAO.Entities.Study_groups;
 import uni.task_diploma.DAO.repository.GroupRepository;
+import uni.task_diploma.DAO.repository.LectorRepository;
 import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.DAO.repository.ScheduleRepository;
 import uni.task_diploma.constants.ParseFieldRasp;
@@ -32,6 +34,8 @@ public class ScheduleCollector {
     private final ParaRepository paraRepository;
 
     private final ScheduleRepository scheduleRepository;
+
+    private final LectorRepository lectorRepository;
 
     @Scheduled(initialDelay = 0, fixedRate = 1000000000)
     public void runOnStartup() {
@@ -173,10 +177,21 @@ public class ScheduleCollector {
                 if (lectors_string.length() > 2) lectors_string = lectors_string.substring(1, lectors_string.length() - 1 );
                 else lectors_string = "";
 
+                List<Lector> lector_entities = new ArrayList<Lector>();
+
+                for(String lector : lectors){
+                    Lector lector_entity = Lector.builder()
+                            .name(lector)
+                            .build();
+
+                    lector_entities.add(lector_entity);
+                    lectorRepository.save(lector_entity);
+                }
+
                 Para para = Para.builder()
                         .paraName(className)
                         .type(classType)
-                        .lectors(lectors_string)
+                        .lector(lector_entities)
                         .room(finalRoom)
                         .build();
 

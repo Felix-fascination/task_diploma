@@ -106,6 +106,22 @@ $('.event').on('mouseleave', function() {
 });
 
 
+$(document).on('change','.event__message', function() {
+	console.log($(this).val())
+	var comment = $(this).val();
+	var id = $(this).attr('data-textarea-id');
+	console.log($(this).dataset)
+	$.ajax({
+		url: '/main/comment/post?comment='+ comment + '&paraId='+ id,
+		type: 'POST',
+		success: function() {
+		},
+		error: function() {
+			alert('An error occurred during authentication.');
+		}
+	});
+});
+
 $(document).on('click','.filter__option', function() {
 	const requestBody = {
 		course: $('.filter__input[data-filter=course]').val(),

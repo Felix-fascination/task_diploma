@@ -1,111 +1,27 @@
-<span class="shedule__header" id="columnTime">Время</span>
-<span class="shedule__header" id="column1">Понедельник</span>
-<span class="shedule__header" id="column2">Вторник</span>
-<span class="shedule__header" id="column3">Среда</span>
-<span class="shedule__header" id="column4">Четверг</span>
-<span class="shedule__header" id="column5">Пятница</span>
-<span class="shedule__header" id="column6">Суббота</span>
-
-<div th:each="time, iterStat : ${classTimes}">
-    <span class="shedule__time shedule__header" th:id="'time' + ${iterStat.count}" th:text="${time}"></span>
-        <div class="shedule__item event" data-column="column1" data-row="time1">
-            <div class="event__body">
-                <h3 class="event__title">АССУ ЕСБО</h3>
-                <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-                <textarea class="event__message" placeholder="Сообщение"></textarea>
-            </div>
-    </div>
+<div class="shedule__row shedule__row_header">
+    <span class="shedule__header" id="columnTime">Время</span>
+    <span class="shedule__header" id="column1">Понедельник</span>
+    <span class="shedule__header" id="column2">Вторник</span>
+    <span class="shedule__header" id="column3">Среда</span>
+    <span class="shedule__header" id="column4">Четверг</span>
+    <span class="shedule__header" id="column5">Пятница</span>
+    <span class="shedule__header" id="column6">Суббота</span>
 </div>
-<div class="shedule__item event" data-column="column2" data-row="time1">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column3" data-row="time1">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item"></div>
-<div class="shedule__item event" data-column="column5" data-row="time1">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column6" data-row="time1">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
+<div class="shedule__row" th:each="moduleEntry : ${ modules.entrySet()}">
+    <span class="shedule__time shedule__header" th:id="'time' + ${moduleEntry.getKey().getTimeIndex()}" th:text="${moduleEntry.getKey().getTime()}"></span>
+    <div th:each="module : ${moduleEntry.getValue()}"
+         th:data-column="'column' + ${module.getDayNumber()}"
+         th:data-row="'time' + ${moduleEntry.getKey().getTimeIndex()}"
+         th:class="${module.getClassName() == '' ? 'shedule_blank' : 'shedule__item event'}">
+        <div class="event__body">
+            <h3 class="event__title" th:text="${module.getClassName()}"></h3>
+            <p class="event__info" th:text="${module.getType()}"></p>
+            <p class="event__info" th:text="${module.getRoom()}" th:if="${module.getRoom() != ''}"></p>
+            <p class="event__info" th:text="${module.getLector()}" th:if="${module.getLector() != ''}"></p>
+            <p class="event__info" th:text="${module.getComment()}" th:if="${module.getComment() != ''}"></p>
+            <p class="event__info" th:text="${module.getCommentator()}" th:if="${module.getCommentator() != ''}"></p>
+            <textarea class="event__message" th:data-textarea-id="${module.getId()}" placeholder="Сообщение" th:if="${module.getClassName() != ''}"></textarea>
+        </div>
     </div>
 </div>
 
-<span class="shedule__time shedule__header" id="time2">10:45 - 12:15</span>
-<div class="shedule__item"></div>
-<div class="shedule__item event" data-column="column2" data-row="time2">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column3" data-row="time2">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item"></div>
-<div class="shedule__item event" data-column="column5" data-row="time2">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item"></div>
-
-<span class="shedule__time shedule__header" id="time3">12:30 - 14:00</span>
-<div class="shedule__item event" data-column="column1" data-row="time3">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item"></div>
-<div class="shedule__item event" data-column="column3" data-row="time3">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column4" data-row="time3">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column5" data-row="time3">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>
-<div class="shedule__item event" data-column="column6" data-row="time3">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
-    </div>
-</div>

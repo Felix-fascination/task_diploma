@@ -1,9 +1,7 @@
 package uni.task_diploma.module;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +10,29 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Setter
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ClassModule {
 
-    public String className;
+    Integer id;
 
-    public String type;
+    String className;
 
-    public String room;
+    String type;
 
-    public String lector;
+    String room;
 
-    public String comment;
+    int dayNumber;
 
-    public String commentator;
+    int timeNumber;
+
+    String time;
+
+    String lector;
+
+    String comment;
+
+    String commentator;
 
 
     public ClassModule(){

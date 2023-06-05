@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import uni.task_diploma.DAO.Entities.StudySchedule;
 import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.module.ClassModule;
+import uni.task_diploma.module.TimeValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,37 +17,66 @@ import java.util.Map;
 public class UtilityClass {
 
     private final ParaRepository paraRepository;
+
+    private final List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
+    private final List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
     public ClassModule getClassModuleFromSchedule(StudySchedule schedule){
         return  ClassModule.builder()
                 .className(schedule.getPara().getParaName())
                 .comment(schedule.getPara().getCmnt() == null? "" : schedule.getPara().getCmnt())
-                .commentator(schedule.getPara().getCmnt_name() == null? "" : schedule.getPara().getCmnt())
+                .commentator(schedule.getPara().getCmnt_name() == null? "" : schedule.getPara().getCmnt_name())
+                .timeNumber(timesOfDay.indexOf(schedule.getTime_of_day()) + 1)
+                .dayNumber(daysOfWeek.indexOf(schedule.getDay_of_week()) + 1)
+                .time(schedule.getTime_of_day())
                 .type(schedule.getPara().getType())
-                .lector(schedule.getPara().getLectors())
+                .lector(schedule.getPara().getLector().toString().substring(1,schedule.getPara().getLector().toString().length() - 1 ))
+                .room(schedule.getPara().getRoom())
+                .id(schedule.getId())
                 .build();
     }
 
-    public Map<String, Map<String, ClassModule>> getClassModulesFromSchedules(List<StudySchedule> schedules){
-        List<ClassModule> modules = new ArrayList<>(schedules.size());
-        for(StudySchedule schedule: schedules){
-            modules.add(getClassModuleFromSchedule(schedule));
-        }
-        // Outer key is day
-        // Inner key is time
-        Map<String, Map<String, ClassModule>> raspTable = new HashMap<>();
-        List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
-        List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
+    public Map<TimeValue, List<ClassModule>> getClassModulesFromSchedules(List<StudySchedule> schedules){
 
-        for(String day: daysOfWeek){
-            for(String time: timesOfDay){
-                raspTable.computeIfAbsent(day, k -> new HashMap<>())
-                        .computeIfAbsent(time, k -> new ClassModule());
-            }
-        }
+        Map<TimeValue, List<ClassModule>> raspTable = new HashMap<>();
+
+        List<String> timesOfSchedules = new ArrayList<>();
+
         for (StudySchedule schedule: schedules){
-            raspTable.get(schedule.getDay_of_week()).put(schedule.getTime_of_day(), getClassModuleFromSchedule(schedule));
+            if(!timesOfSchedules.contains(schedule.getTime_of_day())) timesOfSchedules.add(schedule.getTime_of_day());
+        }
+
+        for (String time : timesOfSchedules) {
+            raspTable.computeIfAbsent(
+                    TimeValue.builder()
+                            .timeIndex(timesOfSchedules.indexOf(time) + 1)
+                            .time(time)
+                            .build(), k -> new ArrayList<>());
+            }
+
+        List<StudySchedule> listForTime = new ArrayList<>();
+        for (String time : timesOfSchedules) {
+                for (StudySchedule schedule : schedules) {
+                    if (time.equals(schedule.getTime_of_day())) {
+                        listForTime.add(schedule);
+                    }
+                }
+                for (int i = 0; i < daysOfWeek.size(); i++) {
+                    if (!listForTime.isEmpty() && daysOfWeek.get(i).equals(listForTime.get(0).getDay_of_week())) {
+                        raspTable.get(TimeValue.builder()
+                                .timeIndex(timesOfSchedules.indexOf(time) + 1)
+                                .time(time)
+                                .build()).add(getClassModuleFromSchedule(listForTime.get(0)));
+                        listForTime.remove(0);
+                    }
+                    else raspTable.get(TimeValue.builder()
+                            .timeIndex(timesOfSchedules.indexOf(time) + 1)
+                            .time(time)
+                            .build()).add(new ClassModule());
+                }
+
         }
 
         return raspTable;
+
     }
 }
