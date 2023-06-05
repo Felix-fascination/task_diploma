@@ -17,10 +17,12 @@ import lombok.experimental.FieldDefaults;
 public class Lector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+            @ToString.Exclude
     Integer id;
 
     @ManyToOne
     @JoinColumn(name = "para_id")
+            @ToString.Exclude
     Para para;
 
     String name;

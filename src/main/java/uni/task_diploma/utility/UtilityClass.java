@@ -2,6 +2,7 @@ package uni.task_diploma.utility;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import uni.task_diploma.DAO.Entities.Lector;
 import uni.task_diploma.DAO.Entities.StudySchedule;
 import uni.task_diploma.DAO.repository.LectorRepository;
 import uni.task_diploma.DAO.repository.ParaRepository;
@@ -24,7 +25,7 @@ public class UtilityClass {
     private final List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
     private final List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
     public ClassModule getClassModuleFromSchedule(StudySchedule schedule){
-        List<String> lectors = lectorRepository.getAllByPara(schedule.getPara());
+        List<Lector> lectors = lectorRepository.getAllByPara(schedule.getPara());
         String lectors_string = lectors.toString();
         lectors_string = lectors_string.substring(1, lectors_string.length() - 1);
 

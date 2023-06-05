@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface LectorRepository extends JpaRepository<Lector, Integer> {
 
-    List<String> getAllByPara(Para para);
+    List<Lector> getAllByPara(Para para);
 }
