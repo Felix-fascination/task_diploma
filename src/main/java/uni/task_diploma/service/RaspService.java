@@ -87,7 +87,7 @@ public class RaspService {
                 }
 
                 String finalRoom = room;
-                classes.computeIfAbsent(nameOfTheDay, k -> new HashMap<>())
+                /*classes.computeIfAbsent(nameOfTheDay, k -> new HashMap<>())
                         .computeIfAbsent(time,
                                 k ->
                                 ClassModule.builder()
@@ -96,7 +96,7 @@ public class RaspService {
                                 .lector(lectors)
                                 .room(finalRoom)
                                 .build()
-                        );
+                        );*/
             }
 
 

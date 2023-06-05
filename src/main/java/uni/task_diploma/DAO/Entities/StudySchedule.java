@@ -5,6 +5,8 @@ import jdk.jfr.Enabled;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+
 @Entity
 @Getter
 @Setter

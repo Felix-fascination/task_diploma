@@ -20,7 +20,7 @@ public class ClassModule {
 
     public String room;
 
-    public List<String> lector;
+    public String lector;
 
     public String comment;
 
@@ -30,7 +30,9 @@ public class ClassModule {
     public ClassModule(){
         this.className = "";
         this.room = "";
-        this.lector = new ArrayList<>();
+        this.lector = "";
         this.type = "";
+        this.comment = "";
+        this.commentator = "";
     }
 }

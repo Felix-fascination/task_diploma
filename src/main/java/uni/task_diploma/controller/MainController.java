@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import uni.task_diploma.module.GroupsRequest;
+import uni.task_diploma.module.ScheduleRequest;
 import uni.task_diploma.service.MainService;
 
 @Controller
@@ -29,6 +30,13 @@ public class MainController {
                             @RequestBody GroupsRequest request){
         mainService.makeGroupsModel(model, request);
         return "group_span";
+    }
+
+    @PostMapping("main/schedule/get")
+    public String getSchedule(Model model,
+                              @RequestBody ScheduleRequest request){
+        mainService.makeSchedule(model, request);
+        return "schedule_body";
     }
 
 

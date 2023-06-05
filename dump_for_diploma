@@ -21,7 +21,7 @@ CREATE TABLE study_schedule (
     group_id integer REFERENCES study_groups (id),
     day_of_week varchar(255),
     time_of_day varchar(255),
-    para_id integer REFERENCES "para" (id),
+    para_id integer REFERENCES para (id),
     odd boolean
 );
 

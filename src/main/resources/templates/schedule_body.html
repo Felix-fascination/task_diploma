@@ -5,12 +5,15 @@
 <span class="shedule__header" id="column4">Четверг</span>
 <span class="shedule__header" id="column5">Пятница</span>
 <span class="shedule__header" id="column6">Суббота</span>
-<span class="shedule__time shedule__header" id="time1">9:00 - 10:30</span>
-<div class="shedule__item event" data-column="column1" data-row="time1">
-    <div class="event__body">
-        <h3 class="event__title">АССУ ЕСБО</h3>
-        <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
-        <textarea class="event__message" placeholder="Сообщение"></textarea>
+
+<div th:each="time, iterStat : ${classTimes}">
+    <span class="shedule__time shedule__header" th:id="'time' + ${iterStat.count}" th:text="${time}"></span>
+        <div class="shedule__item event" data-column="column1" data-row="time1">
+            <div class="event__body">
+                <h3 class="event__title">АССУ ЕСБО</h3>
+                <p class="event__info">Надо будет еще статистику делать, а тут какие то странные пары</p>
+                <textarea class="event__message" placeholder="Сообщение"></textarea>
+            </div>
     </div>
 </div>
 <div class="shedule__item event" data-column="column2" data-row="time1">

@@ -52,7 +52,7 @@ $('.filter__input').on('keypress', function(e) {
 	e.preventDefault();
 });
 
-$('.filter__option').on('click', function() {
+$(document).on('click','.filter__option', function() {
 	let isShowSearch = true;
 
 	$('.filter__selection').removeClass('filter__selection_active');
@@ -84,9 +84,10 @@ $('.filter__search').on('click', function() {
 		isODD: $('#ODD').is(':checked'),
 	}
 	$.ajax({
-		url: '/sendRequestForGetHTMLTable',
+		url: '/main/schedule/get',
 		type: 'POST',
 		data: JSON.stringify(requestBody),
+		contentType: "application/json; charset=utf-8",
 		success: function(response) {
 			$('.shedule__body').html(response);
 		},
@@ -105,7 +106,7 @@ $('.event').on('mouseleave', function() {
 });
 
 
-$('.filter__option').on('click', function() {
+$(document).on('click','.filter__option', function() {
 	const requestBody = {
 		course: $('.filter__input[data-filter=course]').val(),
 		faculty: $('.filter__input[data-filter=faculty]').val()
