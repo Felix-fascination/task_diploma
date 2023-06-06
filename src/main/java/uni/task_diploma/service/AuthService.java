@@ -21,7 +21,6 @@ public class AuthService {
 
 
     public void authenticate(String name, HttpServletResponse response) {
-        //log.error("Use got here to authent");
         cookieService.setCommentatorName(response, name);
         if (name.isEmpty()) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

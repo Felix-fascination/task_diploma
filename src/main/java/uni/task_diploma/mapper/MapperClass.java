@@ -1,4 +1,4 @@
-package uni.task_diploma.utility;
+package uni.task_diploma.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,9 +15,8 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class UtilityClass {
+public class MapperClass {
 
-    private final ParaRepository paraRepository;
 
     private final LectorRepository lectorRepository;
 
