@@ -50,11 +50,6 @@ public class ScheduleCollector {
         log.warn("Ended ScheduleCollector");
     }
 
-    @Scheduled(cron = "0 0 0 * * SUN")
-    public void collectGarbageConnections(){
-
-    }
-
     public void setGroupsForDb(){
         // First key is course
         // Second key is faculty name

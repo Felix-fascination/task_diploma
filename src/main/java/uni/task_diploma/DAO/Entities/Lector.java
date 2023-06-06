@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 public class Lector {
     @Id
@@ -26,4 +25,9 @@ public class Lector {
     Para para;
 
     String name;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

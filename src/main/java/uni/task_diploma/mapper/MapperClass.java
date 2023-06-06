@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import uni.task_diploma.DAO.Entities.Lector;
 import uni.task_diploma.DAO.Entities.StudySchedule;
 import uni.task_diploma.DAO.repository.LectorRepository;
-import uni.task_diploma.DAO.repository.ParaRepository;
 import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.TimeValue;
 

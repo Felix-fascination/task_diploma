@@ -53,7 +53,7 @@ public class ApplicationSecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Overrided it cause passwords are not stored encoded (if it changes then just delete this method)
+    // Overrided it cause passwords are not stored
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(){
@@ -64,7 +64,6 @@ public class ApplicationSecurityConfig {
         };
     }
 
-    // Impl of userDetailService with a method to create a connection pool to jdbc
     public class UserDetailsServiceImpl implements UserDetailsService {
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

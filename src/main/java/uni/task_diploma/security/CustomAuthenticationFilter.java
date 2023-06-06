@@ -26,8 +26,6 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     private final CookieService cookieService;
 
-    private final ApplicationSecurityConfig.UserDetailsServiceImpl userDetailsService;
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,

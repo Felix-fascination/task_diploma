@@ -41,7 +41,6 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-                //.loginProcessingUrl("/user/authenticate").permitAll()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)
