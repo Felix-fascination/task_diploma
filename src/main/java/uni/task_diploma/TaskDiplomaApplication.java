@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @SpringBootApplication()
 //Commented this so that schedule wouldn't refresh everytime
-@EnableScheduling
+//@EnableScheduling
 public class TaskDiplomaApplication {
 
     public static void main(String[] args) {
