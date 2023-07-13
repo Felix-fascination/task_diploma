@@ -15,14 +15,14 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class MapperClass {
+public class ClassModulesFromScheduleMapper {
 
 
     private final LectorRepository lectorRepository;
 
     private final List<String> daysOfWeek = List.of("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
     private final List<String> timesOfDay = List.of("09:00 — 10:30","10:45 — 12:15", "13:15 — 14:45", "15:00 — 16:30", "16:45 — 18:15", "18:25 — 20:05");
-    public ClassModule getClassModuleFromSchedule(StudySchedule schedule){
+    private ClassModule getClassModuleFromSchedule(StudySchedule schedule){
         List<Lector> lectors = lectorRepository.getAllByPara(schedule.getPara());
         String lectors_string = lectors.toString();
         lectors_string = lectors_string.substring(1, lectors_string.length() - 1);
@@ -41,7 +41,7 @@ public class MapperClass {
                 .build();
     }
 
-    public Map<TimeValue, List<ClassModule>> getClassModulesFromSchedules(List<StudySchedule> schedules){
+    public Map<TimeValue, List<ClassModule>> getClassModulesFromSchedule(List<StudySchedule> schedules){
 
         Map<TimeValue, List<ClassModule>> raspTable = new HashMap<>();
 
