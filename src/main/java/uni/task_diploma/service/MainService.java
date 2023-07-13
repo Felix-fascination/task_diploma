@@ -12,7 +12,7 @@ import uni.task_diploma.module.ClassModule;
 import uni.task_diploma.module.GroupsRequest;
 import uni.task_diploma.module.ScheduleRequest;
 import uni.task_diploma.module.TimeValue;
-import uni.task_diploma.mapper.MapperClass;
+import uni.task_diploma.mapper.ClassModulesFromScheduleMapper;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ public class MainService {
 
     private final CookieService cookieService;
 
-    private final MapperClass mapperClass;
+    private final ClassModulesFromScheduleMapper mapperClass;
 
     public void makeMainPageModel(Model model){
         List<String> courses = Arrays.asList("1 курс", "2 курс", "3 курс", "4 курс", "5 курс");
@@ -55,7 +55,7 @@ public class MainService {
 
     public void makeSchedule(Model model, ScheduleRequest request) {
         Study_groups group = groupRepository.getStudyByGroupName(request.getGroup());
-        Map<TimeValue, List<ClassModule>> modules =  mapperClass.getClassModulesFromSchedules(scheduleRepository.getStudyScheduleByGroupsAndOdd(group, request.getIsODD()));
+        Map<TimeValue, List<ClassModule>> modules =  mapperClass.getClassModulesFromSchedule(scheduleRepository.getStudyScheduleByGroupsAndOdd(group, request.getIsODD()));
         model.addAttribute("modules", modules);
     }
 

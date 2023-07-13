@@ -53,7 +53,7 @@ public class SecurityConfig {
     // Possibly can be used for configuration of cors connections
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); // Replace '*' with the allowed origins
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Origin"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
