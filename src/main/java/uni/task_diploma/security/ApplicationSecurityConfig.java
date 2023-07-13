@@ -27,11 +27,9 @@ import java.io.IOException;
 import java.util.Map;
 
 @Configuration
-@RequiredArgsConstructor
 @Slf4j
 public class ApplicationSecurityConfig {
 
-    private final CookieService cookieService;
 
     @Bean
     public UserDetailsServiceImpl userDetailsService(){
